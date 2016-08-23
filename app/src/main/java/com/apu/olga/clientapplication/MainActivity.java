@@ -89,7 +89,10 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject tenderId = dataTenders.getJSONObject(i);
 
                     String id = tenderId.getString("id");
+                    String data = tenderId.getString("dateModified");
                     Log.d(LOG_TAG, "ID: " + id);
+                    Log.d(LOG_TAG, "DateModified: " + data);
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
