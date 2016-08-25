@@ -32,13 +32,11 @@
                 android:layout_height = "wrap_content"/>
 
         </ScrollView>
-
         <Button
             android:id="@+id/tenderBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:text="Tenders info"/>
-
     </RelativeLayout>
 </LinearLayout>

@@ -15,11 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -94,13 +91,10 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < dataTenders.length(); i++) {
                     JSONObject tenderId = dataTenders.getJSONObject(i);
                     id = tenderId.getString("id");
-                    Log.i(LOG_TAG, "List:" + id);
+                    Log.i(LOG_TAG, "Id:" + id);
                     String data = tenderId.getString("dateModified");
-                    Log.i(LOG_TAG, "List:" + data);
-
+                    Log.i(LOG_TAG, "Data:" + data);
                     list.add(id);
-                    Log.i(LOG_TAG, "List:" + list);
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
