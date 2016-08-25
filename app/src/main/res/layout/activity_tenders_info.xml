@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"
+    tools:context=".TendersInfoActivity"
     android:layout_width = "match_parent"
     android:layout_height = "match_parent"
     android:paddingLeft = "@dimen/activity_horizontal_margin"
@@ -14,31 +15,23 @@
         android:layout_height = "match_parent"
         android:gravity = "center" >
 
-    <ProgressBar
-        android:id = "@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate = "true"
-        android:layout_centerHorizontal = "true"
-        android:visibility = "gone"/>
+        <ProgressBar
+            android:id = "@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate = "true"
+            android:layout_centerHorizontal = "true"
+            android:visibility = "gone"/>
 
         <ScrollView
             android:layout_width = "match_parent"
             android:layout_height = "match_parent" >
 
             <TextView
-                android:id = "@+id/responseView"
+                android:id = "@+id/textView"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"/>
 
         </ScrollView>
-
-        <Button
-            android:id="@+id/tenderBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Tenders info"/>
-
     </RelativeLayout>
 </LinearLayout>
