@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
+
         @Override
         protected String doInBackground(Void... urls) {
             try {
@@ -76,10 +77,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("ERROR", e.getMessage(), e);
                 return null;
             }
+
         }
 
         protected void onPostExecute(String strJson) {
             super.onPostExecute(strJson);
+            progressBar.setVisibility(View.VISIBLE);
+            responseView.setText("");
 
             if (strJson == null) {
                 strJson = "THERE WAS AN ERROR";

@@ -1,13 +1,12 @@
 package com.apu.olga.clientapplication;
-
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.ListView;
+
+import com.apu.olga.clientapplication.model.TenderItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,51 +22,67 @@ public class TendersInfoActivity extends AppCompatActivity {
 
     private static final String TAG = TendersInfoActivity.class.getSimpleName();
     public static String LOG_TAG = "my_log_tender";
-    private ArrayList tenderId;
-    TextView textId;
+    private ArrayList tenderIdArry;
+    ListView listView;
+    ArrayList<TenderItem> tenders = new ArrayList<TenderItem>();
+    TendersListAdapter adapter;
+    URL urlTenderInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tenders_info);
 
-        tenderId = getIntent().getStringArrayListExtra("list");
-        Log.i(TAG, "Tender ID: " + tenderId);
+        tenderIdArry = getIntent().getStringArrayListExtra("list");
+        Log.i(TAG, "Tender ID: " + tenderIdArry);
 
-        textId = (TextView) findViewById(R.id.textView);
+        fillData();
         new RetrieveTender().execute();
+        adapter = new TendersListAdapter(this,tenders);
+        listView = (ListView) findViewById(R.id.list);
+        listView.setAdapter(adapter);
+    }
+
+    void fillData() {
+        for (final Object idTen : tenderIdArry) {
+
+            String  urlTenderInfo = Constants.API_KEY + Constants.API_URL + idTen;
+            tenders.add(new TenderItem(urlTenderInfo));
+
+        }
+
     }
 
     class RetrieveTender extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... urls) {
 
-                try {
-                    for (final Object idTen : tenderId) {
+            try {
+                for (final Object idTen : tenderIdArry) {
 
-                        URL urlTenderInfo = new URL(Constants.API_KEY + Constants.API_URL + "/" + idTen);
-                        Log.i(TAG, "URL:" + urlTenderInfo);
+                    urlTenderInfo = new URL(Constants.API_KEY + Constants.API_URL + "/" + idTen);
+                    Log.i(TAG, "URL:" + urlTenderInfo);
 
-                        HttpURLConnection tenderInfoConnection = (HttpURLConnection) urlTenderInfo.openConnection();
-                        tenderInfoConnection.setRequestMethod("GET");
-                        tenderInfoConnection.connect();
-                        try {
-                            BufferedReader bufferedReaderTender = new BufferedReader(new InputStreamReader(tenderInfoConnection.getInputStream()));
-                            StringBuilder stringBuilderTender = new StringBuilder();
-                            String line;
-                            while ((line = bufferedReaderTender.readLine()) != null) {
-                                stringBuilderTender.append(line).append("\n");
-                            }
-                            bufferedReaderTender.close();
-                            return stringBuilderTender.toString();
-                        } finally {
-                            tenderInfoConnection.disconnect();
+                    HttpURLConnection tenderInfoConnection = (HttpURLConnection) urlTenderInfo.openConnection();
+                    tenderInfoConnection.setRequestMethod("GET");
+                    tenderInfoConnection.connect();
+                    try {
+                        BufferedReader bufferedReaderTender = new BufferedReader(new InputStreamReader(tenderInfoConnection.getInputStream()));
+                        StringBuilder stringBuilderTender = new StringBuilder();
+                        String line;
+                        while ((line = bufferedReaderTender.readLine()) != null) {
+                            stringBuilderTender.append(line).append("\n");
                         }
+                        bufferedReaderTender.close();
+                        return stringBuilderTender.toString();
+                    } finally {
+                        tenderInfoConnection.disconnect();
                     }
-                } catch (Exception e) {
-                    Log.e("ERROR", e.getMessage(), e);
-                    return null;
                 }
+            } catch (Exception e) {
+                Log.e("ERROR", e.getMessage(), e);
+                return null;
+            }
             return null;
         }
 
@@ -82,12 +97,14 @@ public class TendersInfoActivity extends AppCompatActivity {
                 dataJsonObj = new JSONObject(tenderId);
                 JSONArray dataTenders = dataJsonObj.getJSONArray("data");
                 for (int i = 0; i < dataTenders.length(); i++) {
+                    JSONObject Id = dataTenders.getJSONObject(i);
+                    String id = Id.getString("contactPoint");
+                    Log.i(LOG_TAG, "Id:" + id);
 
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            textId.setText(tenderId);
         }
     }
 }
