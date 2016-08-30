@@ -49,11 +49,7 @@ public class TendersListAdapter extends BaseAdapter {
         }
 
         TenderItem tender = getTender(position);
-
         ((TextView) view.findViewById(R.id.textView)).setText(tender.getId());
-
-
-
 
         return view;
     }
