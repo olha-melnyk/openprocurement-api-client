@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "391641489955",
+    "firebase_url": "https://epu-app.firebaseio.com",
+    "project_id": "epu-app",
+    "storage_bucket": "epu-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391641489955:android:634e5f8a5bc1104d",
+        "android_client_info": {
+          "package_name": "com.apu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391641489955-in1u88v0kbg4um83f4iftf5t96e9fcfq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu5eE7Yd6Jm7mj19cZwspRmLqW32ibaxQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

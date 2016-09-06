@@ -54,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
     class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+            responseView.setText("");
+        }
+
+        @Override
         protected String doInBackground(Void... urls) {
             try {
                 URL url = new URL(Constants.API_KEY + Constants.API_URL);

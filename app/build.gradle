@@ -17,7 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
 }
+
 repositories {
     mavenCentral()
 }
@@ -31,5 +37,7 @@ dependencies {
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'org.jsoup:jsoup:1.9.2'
+    compile 'com.firebase:firebase-client-android:2.5.2'
+    compile 'com.google.api-client:google-api-client:1.19.1'
     compile group: 'cz.msebera.android' , name: 'httpclient' , version: '4.4.1.2'
 }

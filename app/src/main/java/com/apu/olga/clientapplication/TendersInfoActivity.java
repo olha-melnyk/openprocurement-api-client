@@ -23,6 +23,9 @@ import java.util.ArrayList;
 
 public class TendersInfoActivity extends AppCompatActivity {
 
+    private static final String TAG_URL = "auctionUrl";
+    private static final String TAG_PERIOD = "awardPeriod";
+
     private static final String TAG = TendersInfoActivity.class.getSimpleName();
     public static String LOG_TAG = "my_log_tender";
     private ArrayList<String> tenderIdArray;
@@ -63,6 +66,7 @@ public class TendersInfoActivity extends AppCompatActivity {
             try {
                 for (final Object idTen : tenderIdArray) {
                     urlTenderInfo = new URL(Constants.API_KEY + Constants.API_URL + "/" + idTen);
+                    Log.i(LOG_TAG, "Taaaa:" + urlTenderInfo);
                     HttpURLConnection tenderInfoConnection = (HttpURLConnection) urlTenderInfo.openConnection();
                     tenderInfoConnection.setRequestMethod("GET");
                     tenderInfoConnection.connect();
@@ -87,28 +91,26 @@ public class TendersInfoActivity extends AppCompatActivity {
             return allTenders.toString();
         }
 
-        protected void onPostExecute(String all) {
-            super.onPostExecute(all);
-            if (all == null) {
-                all = "THERE WAS AN ERROR";
-            }
-            JSONObject dataJsonObj = null;
-            try {
-                dataJsonObj = new JSONObject(all);
-                JSONArray tenders = dataJsonObj.getJSONArray(all);
-                JSONArray dataTenderInfo = dataJsonObj.getJSONArray("");
+        protected void onPostExecute(String jsonStr) {
+            super.onPostExecute(jsonStr);
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+                    JSONArray tenders = jsonObj.getJSONArray(TAG_URL);
 
-                for (int i = 0; i < dataTenderInfo.length(); i++) {
-                    JSONObject tenderId = tenders.getJSONObject(i);
-                    if(tenderId == null) continue;
+                    for (int i = 0; i < tenders.length(); i++) {
+                        JSONObject obj = tenders.getJSONObject(i);
 
+                        String url = obj.getString(TAG_URL);
+                        Log.i(LOG_TAG, "Taaa:" + url);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                progressBar.setVisibility(View.GONE);
+                tenders.add(new TenderItem(jsonStr));
+                listView.invalidate();
             }
-            progressBar.setVisibility(View.GONE);
-            tenders.add(new TenderItem(all));
-            listView.invalidate();
         }
     }
 }
